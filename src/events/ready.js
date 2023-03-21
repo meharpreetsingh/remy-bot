@@ -11,5 +11,7 @@ module.exports = {
         type: client.botconfig.Presence.type,
       },
     });
+    // client.registerSlashCommands();
+    client.registerGlobalCommands();
   },
 };

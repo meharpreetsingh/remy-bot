@@ -41,10 +41,6 @@ class Remy extends Client {
     // Loading Command and Events using class member functions
     this.loadEvents();
     this.loadCommands();
-
-    // Registering Slash Commands for Direct Chat
-    require('../utils/registerSlashCommands')();
-    // require('../utils/registerGuildSpecificSlashCommands')(this.botconfig.guildId);
   }
 
   // Load Commands
@@ -91,6 +87,18 @@ class Remy extends Client {
   // Starting the bot
   build() {
     this.login(this.botconfig.token);
+  }
+
+  // Registering Slash Commands for all guild
+  registerSlashCommands() {
+    this.guilds.cache.forEach((guild) => {
+      require('../utils/registerGuildSpecificSlashCommands')(this, guild);
+    });
+  }
+
+  // Register Global Commands
+  registerGlobalCommands() {
+    require('../utils/registerSlashCommands')();
   }
 }
 

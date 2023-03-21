@@ -1,9 +1,8 @@
 const { REST, Routes } = require('discord.js');
-const { clientId, token } = require('../botconfig');
 const fs = require('fs');
 const path = require('path');
 
-module.exports = (client, guildId) => {
+module.exports = (client, guild) => {
   const commands = [];
   // Grab all the command files from the commands directory you created earlier
   const commandsPath = path.join(__dirname, '..', 'commands');
@@ -16,19 +15,19 @@ module.exports = (client, guildId) => {
   }
 
   // Construct and prepare an instance of the REST module
-  const rest = new REST({ version: '10' }).setToken(token);
+  const rest = new REST({ version: '10' }).setToken(client.token);
 
   // and deploy your commands!
   (async () => {
     try {
       // Get Guild Name from Guild id
 
-      console.log(`[${guildId}] ${commands.length} registering (/) commands.`);
+      // console.log(`[guildSpecificCommands] ${guild} : ${commands.length} x (/) commands.`);
 
       // The put method is used to fully refresh all commands in the guild with the current set
-      const data = await rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands });
+      const data = await rest.put(Routes.applicationGuildCommands(client.botconfig.clientId, guild.id), { body: commands });
 
-      console.log(`[${guildId}] Successfully registered ${data.length} (/) commands.`);
+      console.log(`[guildSpecificCommands] ${guild} : ${data.length} (/) commands registered.`);
     } catch (error) {
       // And of course, make sure you catch and log any errors!
       console.error(error);
