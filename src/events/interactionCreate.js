@@ -4,6 +4,8 @@ module.exports = {
   name: Events.InteractionCreate,
   async execute(client, interaction) {
     if (!interaction.isChatInputCommand()) return;
+    if (interaction.channel.type == 'dm')
+      await interaction.reply({ content: `Can't invoke commands here.`, ephemeral: true });
 
     // Get command from client
     const command = interaction.client.commands.get(interaction.commandName);
