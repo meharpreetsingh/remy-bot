@@ -21,12 +21,10 @@ module.exports = () => {
   // and deploy your commands!
   (async () => {
     try {
-      console.log(`Started refreshing ${commands.length} application (/) commands.`);
-
+      // console.log(`[globalCommands] ${commands.length} (/) registeration started.`);
       // The put method is used to fully refresh all commands in the guild with the current set
       const data = await rest.put(Routes.applicationCommands(clientId), { body: commands });
-
-      console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+      console.log(`[globalCommands] ${data.length} (/) registered.`);
     } catch (error) {
       // And of course, make sure you catch and log any errors!
       console.error(error);
