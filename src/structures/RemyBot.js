@@ -21,7 +21,7 @@ class Remy extends Client {
     this.commands = new Collection();
 
     // Configure the database
-    // this.database = require('../db/db').getDb();
+    this.database = require('../db/dbOperations');
 
     // Configure Logger.js with a log file
     this.logger = new Logger(path.join(__dirname, '..', 'logs.log'));
