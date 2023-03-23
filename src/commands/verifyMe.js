@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+
 const isEmailValid = require('../utils/validation/emailValidator');
 const isNameValid = require('../utils/validation/nameValidator');
 const isPhoneValid = require('../utils/validation/phoneValidator');

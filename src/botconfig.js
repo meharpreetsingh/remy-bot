@@ -7,4 +7,10 @@ module.exports = {
     name: 'Remy', // The message shown
     type: 'Chilling', // PLAYING, WATCHING, LISTENING, STREAMING
   },
+
+  // MongoDB
+  mongoDb: {
+    uri: process.env.MONGODB_URI || '',
+    dbname: process.env.MONGODB_NAME || '',
+  },
 };

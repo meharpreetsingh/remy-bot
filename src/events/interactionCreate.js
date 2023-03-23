@@ -14,6 +14,7 @@ module.exports = {
       return;
     }
     try {
+      // Execute the command
       await command.execute(client, interaction);
     } catch (error) {
       console.error(`Error executing ${interaction.commandName}`);
