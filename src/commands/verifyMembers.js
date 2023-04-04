@@ -5,5 +5,7 @@ module.exports = {
     .setName('verifymembers')
     .setDescription('To verify all members in your guild!')
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames),
-  async execute(client, interaction) {},
+  async execute(client, interaction) {
+    await interaction.deferReply({ ephemeral: true });
+  },
 };
