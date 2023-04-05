@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionFlagsBits, Collection } = require('discord.js');
+const { SlashCommandBuilder, PermissionFlagsBits, PermissionsBitField, Collection } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,7 +8,7 @@ module.exports = {
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames),
   async execute(client, interaction) {
     // Send defer reply
-    await interaction.deferReply();
+    await interaction.deferReply({ ephemeral: true });
 
     // For each member present in the guild
     let guildMembers = new Collection();
@@ -19,17 +19,26 @@ module.exports = {
       })
       .catch((err) => console.log(`[verifyMembers] ${err}`));
 
-    guildMembers.forEach((guildMember) => {
-      if (!guildMember.user.bot) {
-        console.log(
-          `[verifyMembers] ${guildMember.user.id}: ${guildMember.user.username}#${guildMember.user.discriminator}`
-        );
+    guildMembers.forEach(async (guildMember) => {
+      if (guildMember.user.bot) return;
+      if (guildMember.permissions.has(PermissionsBitField.Flags.Administrator)) return;
+      // get user from database
+      const dbUser = await client.database.getUser(guildMember.user.id);
+      // If user doesn't exists
+      if (!dbUser) {
+        console.log(`[verifyMembers] ${guildMember.user.username} doesn't exists in database`);
+        const newUser = {
+          userId: guildMember.user.id,
+          isVerified: false,
+          guilds: [guildMember.guild.id],
+        };
+        client.database.addUser(newUser);
       }
+      if (dbUser && dbUser.isVerified) {
+        guildMember.setNickname(`${dbUser.firstname} ${dbUser.lastname}`);
+      }
+      console.log(`[verifyMembers] ${guildMember.user.id}: ${guildMember.user.username}`);
     });
-
-    // If already exists in the database
-
-    // If not already exist in the database
 
     // Send proper reply
     await interaction.editReply({ content: `[verifyMember] in progress`, ephemeral: true });

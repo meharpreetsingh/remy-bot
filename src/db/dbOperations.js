@@ -38,6 +38,15 @@ const addUser = async (userObj) => {
   return await db.collection('users').insertOne(userObj);
 };
 
+const addUserData = async (...userData) => {
+  return await db
+    .collection('users')
+    .updateOne(
+      { userId: userData.userId },
+      { $set: { firstname: userData.firstname, lastname: userData.lastname, countrycode: userData.countrycode } }
+    );
+};
+
 const addCodetoUser = async (userId, code) => {
   return await db.collection('users').updateOne({ userId: userId }, { $set: { verificationCode: code } });
 };
@@ -57,6 +66,7 @@ module.exports = {
   addGuild,
   getUser,
   addUser,
+  addUserData,
   addCodetoUser,
   setVerified,
   setVerifiedRole,
