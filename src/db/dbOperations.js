@@ -45,6 +45,12 @@ const addCodetoUser = async (userId, code) => {
 const setVerified = async (userId) => {
   await db.collection('users').updateOne({ userId: userId }, { $set: { isVerified: true } });
 };
+
+const setVerifiedRole = async (guildId, verifiedRoleId) => {
+  // console.log(`[dbOperations] guildId: ${guildId} | role: ${verifiedRoleId}`);
+  const res = await db.collection('guilds').updateOne({ guildId: guildId }, { $set: { verifiedRole: verifiedRoleId } });
+};
+
 module.exports = {
   getAllGuilds,
   getGuild,
@@ -53,4 +59,5 @@ module.exports = {
   addUser,
   addCodetoUser,
   setVerified,
+  setVerifiedRole,
 };

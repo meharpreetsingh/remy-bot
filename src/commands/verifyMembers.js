@@ -7,11 +7,6 @@ module.exports = {
 
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames),
   async execute(client, interaction) {
-    await interaction.deferReply({ ephemeral: true });
-
-    .setDefaultMemberPermissions(PermissionFlagsBits.ManageNicknames)
-    .setDMPermission(false),
-  async execute(client, interaction) {
     // Send defer reply
     await interaction.deferReply();
 

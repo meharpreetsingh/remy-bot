@@ -1,4 +1,5 @@
 const express = require('express');
+const client = require('../app');
 const botconfig = require('../botconfig');
 const dbOperations = require('../db/dbOperations');
 
