@@ -85,7 +85,11 @@ module.exports = {
       let link = `http://${client.botconfig.server.domain}:${client.botconfig.server.port}/${client.botconfig.server.verificationRoute}?userID=${userId}&code=${uniqueCode}`;
 
       //sendVerificationEmail
-      sendVerificationEmail(email, link);
+      try {
+        sendVerificationEmail(email, link);
+      } catch {
+        client.log(`[verifyMe] Email sent unsuccessful...`);
+      }
       // Adding the code to database
       await client.database.addCodetoUser(userId, uniqueCode);
       console.log(`[verifyMe] Unique Code added to user database.`);

@@ -6,7 +6,7 @@ const server = express();
 const port = botconfig.server.port;
 
 server.get('/userVerification', async (req, res) => {
-  let userId = req.query.userId;
+  let userId = req.query.userID;
   let code = req.query.code;
 
   if (!userId || !code) {
