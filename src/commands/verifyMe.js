@@ -90,8 +90,9 @@ module.exports = {
       } catch {
         client.log(`[verifyMe] Email sent unsuccessful...`);
       }
-      // Adding the code to database
+      // Adding the code and userdata to database
       await client.database.addCodetoUser(userId, uniqueCode);
+      await client.database.addUserData(userId, email, firstname, lastname, countrycode, phone);
       console.log(`[verifyMe] Unique Code added to user database.`);
 
       // Email sent and editing reply to let the user know
