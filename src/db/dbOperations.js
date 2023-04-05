@@ -38,10 +38,19 @@ const addUser = async (userObj) => {
   return await db.collection('users').insertOne(userObj);
 };
 
+const addCodetoUser = async (userId, code) => {
+  return await db.collection('users').updateOne({ userId: userId }, { $set: { verificationCode: code } });
+};
+
+const setVerified = async (userId) => {
+  await db.collection('users').updateOne({ userId: userId }, { $set: { isVerified: true } });
+};
 module.exports = {
   getAllGuilds,
   getGuild,
   addGuild,
   getUser,
   addUser,
+  addCodetoUser,
+  setVerified,
 };

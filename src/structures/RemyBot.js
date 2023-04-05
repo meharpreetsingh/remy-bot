@@ -23,6 +23,11 @@ class Remy extends Client {
     // Configure the database
     this.database = require('../db/dbOperations');
 
+
+    // Connecting to server
+    this.server = require('../server/server');
+
+
     // Configure Logger.js with a log file
     this.logger = new Logger(path.join(__dirname, '..', 'logs.log'));
 

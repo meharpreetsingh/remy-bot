@@ -7,7 +7,9 @@ module.exports = async (email) => {
     validateMx: true,
     validateTypo: true,
     validateDisposable: true,
-    validateSMTP: true,
+    validateSMTP: false,
   });
+  // console.log(`[emailValidator]`);
+  // console.log(res);
   return res.valid;
 };
