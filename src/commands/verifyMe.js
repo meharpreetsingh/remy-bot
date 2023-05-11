@@ -11,11 +11,21 @@ module.exports = {
     .setName('verify')
     .setDescription('To verify yourself!')
     // Adding options
-    .addStringOption((option) => option.setName('firstname').setDescription('Your First Name').setRequired(true))
-    .addStringOption((option) => option.setName('lastname').setDescription('Your Last Name').setRequired(true))
-    .addStringOption((option) => option.setName('email').setDescription('Your Email').setRequired(true))
-    .addIntegerOption((option) => option.setName('countrycode').setDescription("Example: '91' for INDIA").setRequired(true))
-    .addStringOption((option) => option.setName('phone').setDescription('10-digit mobile number').setRequired(true)),
+    .addStringOption((option) =>
+      option.setName('firstname').setDescription('Your First Name').setRequired(true)
+    )
+    .addStringOption((option) =>
+      option.setName('lastname').setDescription('Your Last Name').setRequired(true)
+    )
+    .addStringOption((option) =>
+      option.setName('email').setDescription('Your Email').setRequired(true)
+    )
+    .addIntegerOption((option) =>
+      option.setName('countrycode').setDescription("Example: '91' for INDIA").setRequired(true)
+    )
+    .addStringOption((option) =>
+      option.setName('phone').setDescription('10-digit mobile number').setRequired(true)
+    ),
 
   async execute(client, interaction) {
     // Send defer reply
@@ -85,11 +95,13 @@ module.exports = {
       let link = `http://${client.botconfig.server.domain}:${client.botconfig.server.port}/${client.botconfig.server.verificationRoute}?userID=${userId}&code=${uniqueCode}`;
 
       //sendVerificationEmail
-      try {
-        sendVerificationEmail(email, link);
-      } catch {
-        client.log(`[verifyMe] Email sent unsuccessful...`);
-      }
+
+      sendVerificationEmail(email, link)
+        .then()
+        .catch((err) => {
+          client.log(`[verifyMe] Email verification unsuccessful...`);
+        });
+
       // Adding the code and userdata to database
       await client.database.addCodetoUser(userId, uniqueCode);
       await client.database.addUserData(userId, email, firstname, lastname, countrycode, phone);
@@ -101,7 +113,10 @@ module.exports = {
         ephemeral: true,
       });
     } else {
-      await interaction.editReply({ content: `Please enter correct details! Try Again!`, ephemeral: true });
+      await interaction.editReply({
+        content: `Please enter correct details! Try Again!`,
+        ephemeral: true,
+      });
     }
   },
 };

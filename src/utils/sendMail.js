@@ -20,12 +20,14 @@ module.exports = {
       html: `Cick on this link to verify your account: ${verificationLink}`,
     };
 
-    let info = await transporter.sendMail(message);
+    transporter
+      .sendMail(message)
+      .then((info) => {
+        console.log(`[sendMail] Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
+      })
+      .catch((err) => console.log(err));
 
     // Log Message ID
-    // console.log(`[sendMail] Message sent: ${info.messageId}`);
-
     // Preview only available when sending through an Ethereal account
-    console.log(`[sendMail] Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
   },
 };

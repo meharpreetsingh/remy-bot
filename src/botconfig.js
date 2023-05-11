@@ -26,7 +26,7 @@ module.exports = {
     host: process.env.SMTP_HOST || 'smtp.ethereal.email',
     port: process.env.SMTP_PORT || 587,
     security: process.env.SMTP_SECURITY || 'STARTTLS',
-    user: process.env.SMTP_USERNAME || 'enrique.emard@ethereal.email',
-    pass: process.env.SMTP_PASSWORD || 'vScFepe2f7uujckwCS',
+    user: process.env.SMTP_USERNAME || 'ferne72@ethereal.email',
+    pass: process.env.SMTP_PASSWORD || '3rmuBSUh5VHbFjZtn7',
   },
 };
